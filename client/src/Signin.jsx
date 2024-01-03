@@ -9,6 +9,7 @@ const Signin = () => {
     const [email,setemail]=useState('');
     const [password,setpassword]=useState('');
     const [error,seterror]=useState('');
+    // const [userId,setUserId]=useState('');
     const navigate=useNavigate();
     const  handleclick=async (e)=>{
         e.preventDefault();
@@ -35,6 +36,7 @@ const Signin = () => {
             <div className='max-w-[320px] mx-auto py-16'>
               <h1 className='text-3xl '>Create Your Account</h1>
               <form
+                method='POST'
                 onSubmit={handleclick}
                 className='w-full flex flex-col py-4'
               >

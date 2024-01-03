@@ -6,6 +6,7 @@ import Login from "./Login";
 import Home from "./Home";
 import Likes from "./Likes";
 import ProtectedRoute from "./ProtectedRoute";
+import Plans from "./Plans";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         <Route path="/LogIn" element={<Login/>}/>
         <Route path="/Home" element={<Signin/>}/>
         <Route path="/Likes" element={<Likes/>}/>
-        {/* <Route path="/Plans" element={<Plans/>}/> */}
+        <Route path="/Plans" element={<Plans/>}/>
       </Routes>
       </BrowserRouter>
       </AuthContextProvider>

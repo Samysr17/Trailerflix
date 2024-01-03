@@ -9,6 +9,7 @@ function Row  ({title,fetchUrl,isLargeRow}) {
     const [watchlist,setwatchlist]=useState(false);
     const [saved,setsaved]=useState(false);
     const {user}=UserAuth();
+    // console.log(user.uid);
     const movID=doc(db,'users',`${user?.email}`)
     const addtolist=async(item)=>{
       if(user?.email){
