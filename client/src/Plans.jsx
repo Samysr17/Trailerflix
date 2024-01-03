@@ -1,6 +1,11 @@
 import React from 'react'
 import { TiTick } from "react-icons/ti";
-// import { useState,useEffect } from 'react';
+import { useState } from 'react';
+import { UserAuth } from './Context/AuthContext';
+// import { useNavigate } from 'react-router-dom';
+import { db } from './firebase';
+import { arrayUnion,updateDoc,doc } from 'firebase/firestore';
+import {loadStripe} from '@stripe/react-stripe-js';
 
 const data = [
     {
@@ -28,36 +33,50 @@ const data = [
   ];
 
 const Plans = () => {
-    // const [userId,setuserId]=useState('');
-    // // const [userEmail,setEmail]=useState('');
-    // const {user}=UserAuth();
-    // useEffect(()=>{
-    //     if(user){
-    //         setuserId(user.uid);
-    //     }else{
-    //         setuserId("");
-    //     }
-
-    // },[user,userId]);
-// const checkout=(Plans)=>{
-//     fetch("http://localhost:5000/api/v1/create-subscription-checkout-session",{
-//         method:"POST",
-//         headers:{
-//             "Content-Type":"application/json"
-//         },
-//         mode:"cors",
-//         body: JSON.stringify({Plan:Plans,customerID:userId})
-//     }).then((res)=>{
-//         if(res.ok)return res.json();
-//         console.log(res);
-//         return res.json().then((json)=>Promise.reject(json));
-//     }).then(({session})=>{
-//         window.location=session.url;
-//     }).catch((e)=>{
-//         console.log(e.error);
-//     })
-// }
-
+    //  const navigate=useNavigate();
+    //  console.log(user.uid);
+    //  console.log(user.email);
+    const [plan,setplan]=useState(false);
+    const {user}=UserAuth();
+    const ID=doc(db,'users',`${user?.email}`)
+     const handleclick=async(item)=>{
+      if(user?.email){
+        setplan(!plan);
+       //  console.log(item.title)
+        await updateDoc(ID,{
+          Plans:arrayUnion({
+            id:item.id,
+            title:item.title,
+            quality:item.quality
+          })
+        })
+        const stripe = await loadStripe("pk_test_51OB9TcSB3m3uX235oYnbAGt7I1TflMXxSLco872UxB27EUY0KqPVTnXHR9z8V5OxPbeV0ZQpYz7rWDY7UKsTPriH005xaPamUu");
+        const body = {
+            products:[item.id,item.title,item.quality,item.price]
+        }
+        const headers = {
+            "Content-Type":"application/json"
+        }
+        const response = await fetch("http://localhost:5000/api/create-checkout-session",{
+            method:"POST",
+            headers:headers,
+            body:JSON.stringify(body)
+        });
+    
+        const session = await response.json();
+    
+        const result = stripe.redirectToCheckout({
+            sessionId:session.id
+        });
+        // console.log(result)
+        // console.log(session.id)
+        if(result.error){
+            console.log(result.error);
+        }    
+      }else{
+        alert("Please Log in to Continue")
+      }
+     }
   return (
   <div>
     <div className="flex flex-col  w-full mx-auto min-h-screen diagonal-background overflow-x-hidden bg-[#00000012]">
@@ -86,10 +105,10 @@ const Plans = () => {
               key={idx}
               className=''
             >
-              <div className="text-4xl text-slate-700 text-center py-4 font-bold cursor-pointer hover:text-red-700 ease-in duration-700">
+              <div onClick={()=>handleclick(item)} className="text-4xl text-slate-700 text-center py-4 font-bold cursor-pointer hover:text-red-700 ease-in duration-700">
                {item.title}
               </div>
-              <div  className='border-red-700 border-solid border-2 rounded-md p-16 text-slate-700 cursor-pointer  hover:text-white hover:bg-red-700 ease-in duration-700'>
+              <div  className='border-red-700 border-solid border-2 gap-2 rounded-md p-16 text-slate-700 cursor-pointer  hover:text-white hover:bg-red-700 ease-in duration-700'>
               <div className="flex space-x-2 text-xl  py-4">
               <TiTick className='text-red-700 hover:text-white' size={24}/>
                 Quality:{item.quality}
