@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 import Youtube from 'react-youtube';
 import movieTrailer from 'movie-trailer';
 import { FaArrowLeft } from "react-icons/fa";
+import {TwitterShareButton,WhatsappShareButton,TwitterIcon,WhatsappIcon ,FacebookShareButton,FacebookIcon} from "react-share";
+import { FaShare } from "react-icons/fa6";
 const Likes = () => {
     const {user}=UserAuth();
     const [Movies,setMovies]=useState([]);
@@ -89,6 +91,12 @@ const Likes = () => {
     <p className="text-red-700 ml-[90%] mt-4 cursor-pointer ease-in duration-700 hover:text-white hover:ml-[89%] "><Link to="/"><FaArrowLeft size={40} /></Link></p>
     </div>
     Trailer && <div><Youtube videoId={Trailer} opts={options}/></div>
+    <div className="flex p-4 space-x-4 bg-black w-full justify-center items-center ">
+    <FaShare className="text-white text-xl hover:text-red-700 hover:text-2xl ease-in duration-700" />
+    <FacebookShareButton url={`https://www.youtube.com/watch?v=${Trailer}`} hashtag='Hey Checkout this awesome trailer'><FacebookIcon size={32} round={true}></FacebookIcon></FacebookShareButton>
+    <WhatsappShareButton url={`https://www.youtube.com/watch?v=${Trailer}`} hashtag='Hey Checkout this awesome trailer'><WhatsappIcon size={32} round={true}></WhatsappIcon></WhatsappShareButton>
+    <TwitterShareButton url={`https://www.youtube.com/watch?v=${Trailer}`} title='Hey checkout this awesome movie'><TwitterIcon size={32} round={true}></TwitterIcon></TwitterShareButton>
+    </div>
     </div>}
     </>
   )

@@ -5,7 +5,7 @@ import { UserAuth } from './Context/AuthContext';
 // import { useNavigate } from 'react-router-dom';
 import { db } from './firebase';
 import { arrayUnion,updateDoc,doc } from 'firebase/firestore';
-import {loadStripe} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
 
 const data = [
     {
@@ -13,7 +13,8 @@ const data = [
       title: "Basic",
       quality:"Good",
       resolution:"480p",
-      price: "199",
+      price: 199.0,
+      quantity:1
 
     },
     {
@@ -21,14 +22,18 @@ const data = [
       title: "Standard",
       quality:"Better",
       resolution:"1080p",
-      price: "499",
+      price: 499.0,
+      quantity:1
+
     },
     {
       id: 3,
       title: "Premium",
       quality:"Best",
       resolution:"4K HDR",
-      price: "999",
+      price: 999.0,
+      quantity:1
+
     },
   ];
 
@@ -52,7 +57,7 @@ const Plans = () => {
         })
         const stripe = await loadStripe("pk_test_51OB9TcSB3m3uX235oYnbAGt7I1TflMXxSLco872UxB27EUY0KqPVTnXHR9z8V5OxPbeV0ZQpYz7rWDY7UKsTPriH005xaPamUu");
         const body = {
-            products:[item.id,item.title,item.quality,item.price]
+            products:[{id:item.id,title:item.title,price:item.price,quantity:item.quantity}]
         }
         const headers = {
             "Content-Type":"application/json"
