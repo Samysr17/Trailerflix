@@ -81,13 +81,12 @@ const Likes = () => {
     theme="colored"
 />
     <div className="absolute top-[20%] p-4 md:p-8">
-    <h1 className="font-bold text-3xl md:text-4xl text-white ">My WatchList</h1>
+    <h1 className="font-bold text-3xl md:text-4xl text-white hover:text-red-700 ease-in duration-700 ">My WatchList</h1>
     </div>
     </div>
-     <div className=" ">
           
     
-   <div className="row_posters flex overflow-y-hidden overflow-x-scroll p-[20px]">
+   <div className="row_posters bg-black p-[20px]">
    {Movies.map((item) => (
             <div
               key={item.id}
@@ -107,9 +106,9 @@ const Likes = () => {
             </div>
           ))}
    </div>
-    </div>
+    
     </div>}
-    { <div className="bg-black h-screen ">
+    { <div className={Trailer?"bg-black h-screen ":"hidden"}>
         <div className="flex justify-between">
     <div className="text-red-700 text-[2rem] font-bold fixed m-2"><Link to="/">NETFLIX</Link></div>
     <p className="text-red-700 ml-[90%] mt-4 cursor-pointer ease-in duration-700 hover:text-white hover:ml-[89%] "><Link to="/"><FaArrowLeft size={40} /></Link></p>

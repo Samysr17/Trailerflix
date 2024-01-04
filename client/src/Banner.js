@@ -3,6 +3,10 @@ import axios from './axios'
 import requests from './requests';
 import { Link } from 'react-router-dom';
 import { UserAuth } from './Context/AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
+import { db } from './firebase';
+import { arrayUnion,updateDoc,doc } from 'firebase/firestore';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Banner ()  {
 const {user,logOut}=UserAuth(); 
@@ -30,6 +34,39 @@ useEffect(()=>{
 function truncate(str,n){
     return str?.length>n ? str.substr(0,n-1)+".....":str;
 }
+    const [watchlist,setwatchlist]=useState(false);
+    const [saved,setsaved]=useState(false);
+    const movID=doc(db,'users',`${user?.email}`)
+const addtolist=async(item)=>{
+  if(user?.email){
+    setwatchlist(!watchlist);
+    setsaved(!saved);
+   //  console.log(item.title)
+    await updateDoc(movID,{
+     watchList:arrayUnion({
+       id:item.id,
+       title:item.title,
+       img:item.backdrop_path
+     })
+    })
+    toast.success('Added To Watchlist', {
+      position: "top-right",
+      autoClose: 15,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
+
+    
+  }else{
+    alert("Please Log in to Continue")
+  }
+ 
+}
+
   return (
     <header className="banner"
     style ={{
@@ -43,6 +80,18 @@ function truncate(str,n){
        > 
       <div className="flex items-center justify-between p-4">
     <div className="text-red-700  text-[1.5rem]  md:text-[2rem] font-bold fixed m-2">TRAILERFLIX</div>
+    <ToastContainer
+    position="top-right"
+    autoClose={5000}
+    hideProgressBar={true}
+    newestOnTop={false}
+    closeOnClick
+    rtl={false}
+    pauseOnFocusLoss
+    draggable
+    pauseOnHover
+    theme="colored"
+/>
    {user?.email ?
     <div className=" flex  ml-[63%]  md:ml-[85%] ">
     <button className="text-white text-xs  md:pr-4 pr-1 sm:text-sm hover:text-red-700 ease-in duration-700  rounded cursor-pointer" ><Link to="/Likes">Watchlist</Link></button>
@@ -60,7 +109,7 @@ function truncate(str,n){
         {movies?.title || movies?.name || movies?.original_name}{/*api response handling*/}
      </h1>
      <div className="buttons mt-4">
-        <button className="pl-[2rem] pr-[2rem] pt-[0.5rem] pb-[0.5rem] bg-[#666262] hover:bg-red-700 ease-in duration-700 text-white rounded-md">Add To Watchlist</button>
+        <button onClick={()=>addtolist(movies)} className="pl-[2rem] pr-[2rem] pt-[0.5rem] pb-[0.5rem] bg-[#666262] hover:bg-red-700 ease-in duration-700 text-white rounded-md">Add To Watchlist</button>
      </div>
      <h1 className="description hidden md:flex mt-4 w-[45rem] pt-[1rem] max-w-[360px] text-[1 rem] [400px]:hidden ">{movies?.overview}
      {truncate(movies?.overview,10)}

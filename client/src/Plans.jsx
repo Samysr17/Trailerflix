@@ -6,6 +6,9 @@ import { UserAuth } from './Context/AuthContext';
 import { db } from './firebase';
 import { arrayUnion,updateDoc,doc } from 'firebase/firestore';
 import {loadStripe} from '@stripe/stripe-js';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const data = [
     {
@@ -55,6 +58,16 @@ const Plans = () => {
             quality:item.quality
           })
         })
+        toast.success('Loading Payment!!!', {
+          position: "top-right",
+          autoClose: 20000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
         const stripe = await loadStripe("pk_test_51OB9TcSB3m3uX235oYnbAGt7I1TflMXxSLco872UxB27EUY0KqPVTnXHR9z8V5OxPbeV0ZQpYz7rWDY7UKsTPriH005xaPamUu");
         const body = {
             products:[{id:item.id,title:item.title,price:item.price,quantity:item.quantity}]
@@ -67,6 +80,7 @@ const Plans = () => {
             headers:headers,
             body:JSON.stringify(body)
         });
+
     
         const session = await response.json();
     
@@ -86,6 +100,18 @@ const Plans = () => {
   <div>
     <div className="flex flex-col  w-full mx-auto min-h-screen diagonal-background overflow-x-hidden bg-[#00000012]">
     <div className="text-red-700 text-[2rem] font-bold fixed m-2">TRAILERFLIX</div>
+    <ToastContainer
+      position="top-right"
+      autoClose={20000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="colored"
+/>
         <div className="md:text-3xl text-xl  mt-24 ml-[10%] md:ml-[20%]  text-white">Choose the plan that’s right for you</div>
         <div className="flex flex-col  ml-[20%] mt-4   ">
         <div className="flex space-x-2">
