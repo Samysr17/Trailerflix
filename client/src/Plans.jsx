@@ -85,24 +85,24 @@ const Plans = () => {
   return (
   <div>
     <div className="flex flex-col  w-full mx-auto min-h-screen diagonal-background overflow-x-hidden bg-[#00000012]">
-    <div className="text-red-700 text-[2rem] font-bold fixed m-2">SAMFLIX</div>
-        <div className="text-3xl mt-24 ml-[20%]  text-white">Choose the plan that’s right for you</div>
+    <div className="text-red-700 text-[2rem] font-bold fixed m-2">TRAILERFLIX</div>
+        <div className="md:text-3xl text-xl  mt-24 ml-[10%] md:ml-[20%]  text-white">Choose the plan that’s right for you</div>
         <div className="flex flex-col  ml-[20%] mt-4   ">
         <div className="flex space-x-2">
         <TiTick className='text-red-700' size={24}/>
-        <div className="text-slate-700 text-xl ease-in duration-700 hover:text-white">No commitments, cancel anytime. </div>
+        <div className="text-slate-700 text-lg  md:text-xl ease-in duration-700 hover:text-white">No commitments, cancel anytime. </div>
         </div>
         <div className="flex space-x-2">
         <TiTick className='text-red-700' size={24}/>
-        <div className="text-slate-700 text-xl hover:text-white ease-in duration-700">Everything on Netflix for one low price.</div>
+        <div className="text-slate-700 text-lg  md:text-xl hover:text-white ease-in duration-700">Everything on Netflix for one low price.</div>
         </div>
         <div className="flex space-x-2">
         <TiTick className='text-red-700' size={24}/>
-        <div className="text-slate-700 text-xl hover:text-white ease-in duration-700" >No ads and no extra fees. Ever.</div>
+        <div className="text-slate-700 text-lg  md:text-xl hover:text-white ease-in duration-700" >No ads and no extra fees. Ever.</div>
         </div>
         </div>
         <div
-          className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 z-50 place-items-center w-9/12 mx-auto
+          className="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-8  place-items-center w-9/12 mx-auto
         mt-8"
         >
           {data.map((item, idx) => (
@@ -113,7 +113,7 @@ const Plans = () => {
               <div onClick={()=>handleclick(item)} className="text-4xl text-slate-700 text-center py-4 font-bold cursor-pointer hover:text-red-700 ease-in duration-700">
                {item.title}
               </div>
-              <div  className='border-red-700 border-solid border-2 gap-2 rounded-md p-16 text-slate-700 cursor-pointer  hover:text-white hover:bg-red-700 ease-in duration-700'>
+              <div onClick={()=>handleclick(item)} className='border-red-700 border-solid border-2 gap-2 rounded-md p-16 text-slate-700 cursor-pointer  hover:text-white hover:bg-red-700 ease-in duration-700'>
               <div className="flex space-x-2 text-xl  py-4">
               <TiTick className='text-red-700 hover:text-white' size={24}/>
                 Quality:{item.quality}
