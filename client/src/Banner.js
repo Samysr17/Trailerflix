@@ -68,7 +68,7 @@ const addtolist=async(item)=>{
 }
 
   return (
-    <header className="banner"
+    <header className="banner h-auto"
     style ={{
           backgroundSize:"cover",
           backgroundImage:`url(
@@ -111,12 +111,12 @@ const addtolist=async(item)=>{
      <div className="buttons mt-4">
         <button onClick={()=>addtolist(movies)} className="pl-[2rem] pr-[2rem] pt-[0.5rem] pb-[0.5rem] bg-[#666262] hover:bg-red-700 ease-in duration-700 text-white rounded-md">Add To Watchlist</button>
      </div>
-     <h1 className="description hidden md:flex mt-4 w-[45rem] pt-[1rem] max-w-[360px] text-[1 rem] [400px]:hidden ">{movies?.overview}
+     <h1 className="description hidden h-auto md:flex mt-4 w-[45rem] pt-[1rem] max-w-[360px] text-[1 rem] [400px]:hidden ">{movies?.overview}
      {truncate(movies?.overview,10)}
      </h1>
     
      </div>
-     <div class="h-[6rem]  bg-gradient-to-b  transparent from-transparent via-off-white to-black"/>
+     <div class="h-[16%] hidden  md:flex  bg-gradient-to-b  transparent from-transparent via-off-white to-black"/>
      
     </header>
     
