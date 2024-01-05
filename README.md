@@ -1,7 +1,10 @@
 #  TrailerFlix
 ## A one stop destination where you can watch movie trailers and share with friends family and batchmates
-Application: https://trailerflixsam.netlify.app/
+Application:-
+https://trailerflixsam.netlify.app/
+
 Demonstration:-
+
 
 https://youtu.be/bcqpenIN-ZM
 
